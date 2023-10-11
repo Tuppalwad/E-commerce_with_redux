@@ -1,9 +1,10 @@
 import React from "react";
-
-
+import { useDispatch } from "react-redux";
+import { addCart } from "../Redux/SliceCard";
+import { useNavigate } from "react-router-dom";
 const imageStyle = {
     width: "100%",
-    height: "auto",
+    height: "300px",
     transition: "transform 0.3s",
 };
 
@@ -40,6 +41,10 @@ const Overlay = (props) => {
         e.currentTarget.style.transform = "scale(1)";
         e.currentTarget.querySelector(".overlay").style.opacity = "0";
     };
+    const dispach = useDispatch();
+    // console.log(props)
+
+    const nevigate = useNavigate()
 
     return (
         <div className="relative">
@@ -47,19 +52,19 @@ const Overlay = (props) => {
                 className="relative"
                 onMouseEnter={handleImageHover}
                 onMouseLeave={handleImageLeave}
+                onClick={() => nevigate(`/details/${props.img.id}`)}
+                style={{
+                    cursor: "pointer",
+                }}
             >
-                <img src={props.img} className="rounded-lg" alt="Image 1" style={imageStyle} />
+                <img src={props.img.imageUrl} className="rounded-lg" alt="Image 1" style={imageStyle} />
                 <div className="overlay" style={overlayStyle}>
 
-                    <div style={{
-                        paddingBottom: "20px"
-                    }}>
-                        <i className="fas fa-thumbs-up" style={iconStyle}></i>
-                        <i className="fas fa-shopping-cart" style={iconStyle}></i>
-                        <i className="fas fa-thumbs-down" style={iconStyle}></i>
-                    </div>
+
                     <div className="flex">
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded mb-2">
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded mb-2"
+                            onClick={() => dispach(addCart({ id: props.img.id, name: props.img.name, price: props.img.price, quantity: 1, image: props.img.imageUrl }))}
+                        >
                             <i className="fas fa-shopping-cart"></i>
                         </button>
 

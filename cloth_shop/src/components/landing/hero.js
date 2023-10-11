@@ -16,23 +16,26 @@ export default function ImageSlider() {
     autoplay: true,
   };
 
-  // Inline CSS for image style
-  // const imageStyle = {
-  //   width: "100%",
-  //   height: "600px",
-  // };
-
   return (
-    <div className="">
+    <div className=" container">
       <Slider {...sliderSettings} style={{ padding: 0 }}>
         <div>
-          <img src={img2} alt="Image 1" />
+          <img src={img2} alt="Image 1" className="" style={{
+            width: "100%",
+            height: "600px",
+          }} />
         </div>
         <div>
-          <img src={img2} alt="Image 2" />
+          <img src={img2} alt="Image 2" style={{
+            width: "100%",
+            height: "600px",
+          }} />
         </div>
         <div>
-          <img src={img3} alt="Image 3" />
+          <img src={img3} alt="Image 3" style={{
+            width: "100%",
+            height: "600px",
+          }} />
         </div>
       </Slider>
     </div>

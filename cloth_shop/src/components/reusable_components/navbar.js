@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import logo from "../Asset/logo1.png";
 import { Link } from "react-router-dom";
-function navbar() {
+import { useDispatch, useSelector } from "react-redux";
+import { setOpen } from "../Redux/CartItemShow";
+function Navbar() {
+  const c_items = useSelector((state) => state);
+
+  const dispachCart = useDispatch();
+  const open = useSelector((state) => state);
+  console.log(open.cartopen)
   return (
     <div>
       <nav class="bg-white border-gray-200 dark:bg-white">
@@ -25,14 +32,23 @@ function navbar() {
             </button>
           </div>
 
-          <div class="flex items-center">
-            <Link
-              to="/shippingcart"
-              class="mr-6 text-sm  text-gray-500 dark:text-gray-900"
+          <div class="flex items-center ">
+
+            <p
+
+              class="mr-6 text-sm  text-gray-500 dark:text-gray-900 relative"
+              onClick={() =>
+                dispachCart(setOpen({ cartopen: !open.cartopen }))
+              }
+              style={{
+                cursor: "pointer",
+              }}
             >
-              {/* add to card icon  */}
+              <span class="absolute -top-4 left-2 rounded-full bg-red-500 text-white p-1 text-xs">
+                {c_items.cart.length}
+              </span>
               <i class="fas fa-shopping-cart"></i>
-            </Link>
+            </p>
             <Link
               to="/login"
               class="text-sm  text-gray-600 dark:text-gray-500 hover:underline"
@@ -95,4 +111,4 @@ function navbar() {
   );
 }
 
-export default navbar;
+export default Navbar;

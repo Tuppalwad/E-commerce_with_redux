@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "./components/reusable_components/navbar";
+import Navbar from "./components/reusable_components/Navbar";
 import Landing from "./components/landing";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
@@ -15,11 +15,15 @@ import Contact from "./components/Contact/Contact";
 import Blog from "./components/Blog";
 import BlogPage from "./components/Blog/BlogPage";
 import ShippingCart from "./components/Product/ShippingCart";
+import { useSelector } from "react-redux"
 function App() {
+  const selectore = useSelector(state => state)
+  console.log(selectore)
   return (
     <div className="App">
       <Router>
         <Navbar />
+        <ShippingCart />
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/shop" element={<Shop />} />

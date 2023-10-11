@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { RadioGroup } from "@headlessui/react";
 import img from "../Asset/2.jpg";
+import Overlay from "../landing/Overlay";
+import { Link } from "react-router-dom";
+
+
 const product = {
   name: "Basic Tee 6-Pack",
   price: "$192",
@@ -59,63 +62,126 @@ const reviews = { href: "#", average: 4, totalCount: 117 };
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+
+
+
 const products = [
   {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  // More products...
-];
-export default function Example() {
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
+    "name": "ComfortBlend Classic Tee",
+    "price": 399,
+    "offer": 10,
+    "quantity": 20,
+    "category": "grocery",
+    "imageid": "6526450b78d8efcd4d17",
+    "color": 'Black',
+    "size": 'S',
+    "gender": 'male',
+    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/6526450b78d8efcd4d17/preview?project=64fe9e67d71d1c56225a"
 
+  },
+  {
+    "name": "Eco-Friendly Cotton Crew ",
+    "price": 299,
+    "offer": 10,
+    "quantity": 20,
+    "category": "grocery",
+    "imageid": "65264595c5a24d1bed86",
+    "color": 'red',
+    "size": 'M',
+    "gender": 'female',
+    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/65264595c5a24d1bed86/preview?project=64fe9e67d71d1c56225a"
+  },
+  {
+    "name": "Urban Street Style Shirt",
+    "price": 199,
+    "offer": 10,
+    "quantity": 20,
+    "category": "grocery",
+    "gender": 'male',
+    "imageid": "652645d7bac4f2fde358",
+    "color": 'Blue',
+    "size": 'L',
+    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652645d7bac4f2fde358/preview?project=64fe9e67d71d1c56225a"
+  },
+  {
+    "name": "Retro Graphic Print Top",
+    "price": 499,
+    "offer": 10,
+    "quantity": 20,
+    "category": "grocery",
+    "imageid": "65264614baa4f7c02a7e",
+    "color": 'yellow',
+    "size": 'XL',
+    "gender": 'female',
+    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/65264614baa4f7c02a7e/preview?project=64fe9e67d71d1c56225a"
+  },
+  {
+    "name": "Athleisure Active Shirt",
+    "price": 699,
+    "offer": 10,
+    "quantity": 20,
+    "category": "grocery",
+    "imageid": "652646930fd5b31990d9",
+    "color": 'white',
+    "size": 'XXL',
+    "gender": 'female',
+    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652646930fd5b31990d9/preview?project=64fe9e67d71d1c56225a"
+  },
+  {
+    "name": "Vintage Vibe T-Shirt",
+    "price": 599,
+    "offer": 10,
+    "quantity": 20,
+    "category": "grocery",
+    "imageid": "652646c872509325b7dc",
+    "color": 'green',
+    "size": 'S',
+    "gender": 'male',
+    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652646c872509325b7dc/preview?project=64fe9e67d71d1c56225a"
+  },
+  {
+    "name": "Signature Soft Cotton Tee",
+    "price": 599,
+    "offer": 10,
+    "quantity": 20,
+    "category": "grocery",
+    "imageid": "652647b69c625267d476",
+    "color": 'pink',
+    "size": 'M',
+    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652647b69c625267d476/preview?project=64fe9e67d71d1c56225a"
+  },
+  {
+    "name": "Modern Minimalist Jersey ",
+    "price": 499,
+    "offer": 10,
+    "quantity": 10,
+    "category": "grocery",
+    "imageid": "652647f8d21f7b3a607e",
+    "color": 'orange',
+    "size": 'L',
+    "gender": 'female',
+    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652647f8d21f7b3a607e/preview?project=64fe9e67d71d1c56225a"
+  },
+  {
+    "name": "Weekend Adventure Tee",
+    "price": 699,
+    "offer": 10,
+    "quantity": 20,
+    "category": "grocery",
+    "imageid": "652648ba7c16d3fc6135",
+    "color": 'red',
+    "size": 'XL',
+    "gender": 'male',
+    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652648ba7c16d3fc6135/preview?project=64fe9e67d71d1c56225a"
+  }
+]
+export default function Example() {
+
+
+  useEffect(() => {
+    // got top 
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <div className="bg-white">
       <div
@@ -155,7 +221,10 @@ export default function Example() {
         </div>
         <div className=" lg:row-span-3 lg:mt-0 pt-6 pr-6 pb-6">
           <h2 className="mt-8">Product information</h2>
-          <p className="text-3xl tracking-tight text-gray-900">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            {product.name}
+          </h1>
+          <p className="text-3xl mt-2 tracking-tight text-gray-900">
             {product.price}
           </p>
 
@@ -192,42 +261,13 @@ export default function Example() {
             <div>
               <h3 className="text-sm font-medium text-gray-900">Color</h3>
 
-              <RadioGroup
-                value={selectedColor}
-                onChange={setSelectedColor}
-                className="mt-4"
-              >
-                <RadioGroup.Label className="sr-only">
-                  Choose a color
-                </RadioGroup.Label>
-                <div className="flex items-center space-x-3">
-                  {product.colors.map((color) => (
-                    <RadioGroup.Option
-                      key={color.name}
-                      value={color}
-                      className={({ active, checked }) =>
-                        classNames(
-                          color.selectedClass,
-                          active && checked ? "ring ring-offset-1" : "",
-                          !active && checked ? "ring-2" : "",
-                          "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none"
-                        )
-                      }
-                    >
-                      <RadioGroup.Label as="span" className="sr-only">
-                        {color.name}
-                      </RadioGroup.Label>
-                      <span
-                        aria-hidden="true"
-                        className={classNames(
-                          color.class,
-                          "h-8 w-8 rounded-full border border-black border-opacity-10"
-                        )}
-                      />
-                    </RadioGroup.Option>
-                  ))}
-                </div>
-              </RadioGroup>
+              <div className="flex mt-3">
+                <button className="w-6 h-6 rounded-full bg-gray-900 border-2 border-transparent" />
+                <button className="w-6 h-6 rounded-full bg-gray-200 ml-3 border-2 border-transparent" />
+                <button className="w-6 h-6 rounded-full bg-blue-500 ml-3 border-2 border-transparent" />
+
+              </div>
+
             </div>
 
             {/* Sizes */}
@@ -241,114 +281,45 @@ export default function Example() {
                   Size guide
                 </a>
               </div>
-
-              <RadioGroup
-                value={selectedSize}
-                onChange={setSelectedSize}
-                className="mt-4"
-              >
-                <RadioGroup.Label className="sr-only">
-                  Choose a size
-                </RadioGroup.Label>
-                <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                  {product.sizes.map((size) => (
-                    <RadioGroup.Option
-                      key={size.name}
-                      value={size}
-                      disabled={!size.inStock}
-                      className={({ active }) =>
-                        classNames(
-                          size.inStock
-                            ? "cursor-pointer bg-white text-gray-900 shadow-sm"
-                            : "cursor-not-allowed bg-gray-50 text-gray-200",
-                          active ? "ring-2 ring-indigo-500" : "",
-                          "group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6"
-                        )
-                      }
-                    >
-                      {({ active, checked }) => (
-                        <>
-                          <RadioGroup.Label as="span">
-                            {size.name}
-                          </RadioGroup.Label>
-                          {size.inStock ? (
-                            <span
-                              className={classNames(
-                                active ? "border" : "border-2",
-                                checked
-                                  ? "border-indigo-500"
-                                  : "border-transparent",
-                                "pointer-events-none absolute -inset-px rounded-md"
-                              )}
-                              aria-hidden="true"
-                            />
-                          ) : (
-                            <span
-                              aria-hidden="true"
-                              className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                            >
-                              <svg
-                                className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
-                                viewBox="0 0 100 100"
-                                preserveAspectRatio="none"
-                                stroke="currentColor"
-                              >
-                                <line
-                                  x1={0}
-                                  y1={100}
-                                  x2={100}
-                                  y2={0}
-                                  vectorEffect="non-scaling-stroke"
-                                />
-                              </svg>
-                            </span>
-                          )}
-                        </>
-                      )}
-                    </RadioGroup.Option>
-                  ))}
-                </div>
-              </RadioGroup>
+              <div className="flex mt-3">
+                <button className="w-12 h-8 rounded-lg bg-white text-black border-2 border-gray-300 px-2 py-1" >
+                  <span className=" text-black">S</span>
+                </button>
+                <button className="w-12 h-8 rounded-lg bg-white text-black ml-3 border-2 border-gray-300 px-2 py-1" >
+                  <span className=" text-black">M</span>
+                </button>
+                <button className="w-12 h-8 rounded-lg bg-white text-black ml-3 border-2 border-gray-300 px-2 py-1" >
+                  <span className=" text-black">L</span>
+                </button>
+                < button className="w-12 h-8 rounded-lg bg-white ml-3 text-black border-2 border-gray-300 px-2 py-1" >
+                  <span className=" text-black">XL</span>
+                </button>
+              </div>
             </div>
 
-            <button
-              type="submit"
+            <p
+              type=""
               className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              style={{
+                cursor: "pointer",
+              }}
             >
-              Add to bag
-            </button>
+              Buy now
+            </p>
           </form>
-          {/* <div className="py-10 lg:col-span-2 lg:col-start-1  lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
-            <div>
-              <h3 className="sr-only">Description</h3>
 
-              <div className="space-y-6">
-                <p className="text-base text-gray-900">{product.description}</p>
-              </div>
-            </div>
+          {/* Product details */}
+          <div className="mt-10">
+            <h2 className="text-sm font-medium text-gray-900">Description</h2>
 
-            <div className="mt-10">
-              <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
+            <div
+              className="mt-4 prose prose-sm text-gray-500"
+              dangerouslySetInnerHTML={{ __html: product.description }}
+            />
 
-              <div className="mt-4">
-                <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
-                  {product.highlights.map((highlight) => (
-                    <li key={highlight} className="text-gray-400">
-                      <span className="text-gray-600">{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+          </div>
 
-            <div className="mt-10">
-              <h2 className="text-sm font-medium text-gray-900">Details</h2>
 
-              <div className="mt-4 space-y-6">
-                <p className="text-sm text-gray-600">{product.details}</p>
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
 
@@ -359,30 +330,21 @@ export default function Example() {
           </h2>
 
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {products.map((product) => (
-              <div key={product.id} className="group relative">
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                  <img
-                    src={product.imageSrc}
-                    alt={product.imageAlt}
-                    className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                  />
-                </div>
+            {products.map((product, index) => (
+              <div key={product.id} className="group ">
+                <Overlay img={{ ...product, id: index }} />
                 <div className="mt-4 flex justify-between">
                   <div>
                     <h3 className="text-sm text-gray-700">
-                      <a href={product.href}>
-                        <span aria-hidden="true" className="absolute inset-0" />
+                      <Link to={`/details/${product.index}`}>
                         {product.name}
-                      </a>
+                      </Link>
                     </h3>
                     <p className="mt-1 text-sm text-gray-500">
                       {product.color}
                     </p>
                   </div>
-                  <p className="text-sm font-medium text-gray-900">
-                    {product.price}
-                  </p>
+                  <p className="text-sm font-medium text-gray-900">{product.price}</p>
                 </div>
               </div>
             ))}

@@ -1,7 +1,9 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-
+import { useDispatch, useSelector } from "react-redux";
+import { removeCart } from '../Redux/SliceCard';
+import { setOpen } from '../Redux/CartItemShow';
 const products = [
     {
         id: 1,
@@ -28,11 +30,17 @@ const products = [
 ]
 
 export default function ShippingCart() {
-    const [open, setOpen] = useState(true)
+    const items = useSelector((state) => state);
+    const total = items.cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const dispach = useDispatch();
+    const checkopen = useSelector((state) => state);
+    const setclose = useDispatch();
 
     return (
-        <Transition.Root show={open} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={setOpen}>
+        <Transition.Root show={checkopen.cartopen} as={Fragment}>
+            <Dialog as="div" className="relative z-10"
+                onClose={() => setclose(setOpen({ cartopen: !checkopen.cartopen }))}
+            >
                 <Transition.Child
                     as={Fragment}
                     enter="ease-in-out duration-500"
@@ -66,7 +74,7 @@ export default function ShippingCart() {
                                                     <button
                                                         type="button"
                                                         className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
-                                                        onClick={() => setOpen(false)}
+                                                        onClick={() => setclose(setOpen({ cartopen: !checkopen.cartopen }))}
                                                     >
                                                         <span className="absolute -inset-0.5" />
                                                         <span className="sr-only">Close panel</span>
@@ -78,12 +86,12 @@ export default function ShippingCart() {
                                             <div className="mt-8">
                                                 <div className="flow-root">
                                                     <ul role="list" className="-my-6 divide-y divide-gray-200">
-                                                        {products.map((product) => (
+                                                        {items.cart.map((product) => (
                                                             <li key={product.id} className="flex py-6">
                                                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                                     <img
-                                                                        src={product.imageSrc}
-                                                                        alt={product.imageAlt}
+                                                                        src={product.image}
+                                                                        alt={product.name}
                                                                         className="h-full w-full object-cover object-center"
                                                                     />
                                                                 </div>
@@ -105,6 +113,7 @@ export default function ShippingCart() {
                                                                             <button
                                                                                 type="button"
                                                                                 className="font-medium text-indigo-600 hover:text-indigo-500"
+                                                                                onClick={() => dispach(removeCart({ id: product.id }))}
                                                                             >
                                                                                 Remove
                                                                             </button>
@@ -121,7 +130,9 @@ export default function ShippingCart() {
                                         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                                             <div className="flex justify-between text-base font-medium text-gray-900">
                                                 <p>Subtotal</p>
-                                                <p>$262.00</p>
+                                                <p>
+                                                    {total}
+                                                </p>
                                             </div>
                                             <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                                             <div className="mt-6">
@@ -138,7 +149,7 @@ export default function ShippingCart() {
                                                     <button
                                                         type="button"
                                                         className="font-medium text-indigo-600 hover:text-indigo-500"
-                                                        onClick={() => setOpen(false)}
+                                                        onClick={() => setclose(setOpen({ cartopen: !checkopen.cartopen }))}
                                                     >
                                                         Continue Shopping
                                                         <span aria-hidden="true"> &rarr;</span>
