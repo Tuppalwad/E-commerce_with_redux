@@ -4,123 +4,13 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Overlay from "./Overlay";
+import { useSelector } from "react-redux";
 
 
 function Sale() {
-  const products = [
-    {
-      "name": "ComfortBlend Classic Tee",
-      "price": 399,
-      "offer": 10,
-      "quantity": 20,
-      "category": "grocery",
-      "imageid": "6526450b78d8efcd4d17",
-      "color": 'Black',
-      "size": 'S',
-      "gender": 'male',
-      "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/6526450b78d8efcd4d17/preview?project=64fe9e67d71d1c56225a"
-
-    },
-    {
-      "name": "Eco-Friendly Cotton Crew ",
-      "price": 299,
-      "offer": 10,
-      "quantity": 20,
-      "category": "grocery",
-      "imageid": "65264595c5a24d1bed86",
-      "color": 'red',
-      "size": 'M',
-      "gender": 'female',
-      "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/65264595c5a24d1bed86/preview?project=64fe9e67d71d1c56225a"
-    },
-    {
-      "name": "Urban Street Style Shirt",
-      "price": 199,
-      "offer": 10,
-      "quantity": 20,
-      "category": "grocery",
-      "gender": 'male',
-      "imageid": "652645d7bac4f2fde358",
-      "color": 'Blue',
-      "size": 'L',
-      "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652645d7bac4f2fde358/preview?project=64fe9e67d71d1c56225a"
-    },
-    {
-      "name": "Retro Graphic Print Top",
-      "price": 499,
-      "offer": 10,
-      "quantity": 20,
-      "category": "grocery",
-      "imageid": "65264614baa4f7c02a7e",
-      "color": 'yellow',
-      "size": 'XL',
-      "gender": 'female',
-      "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/65264614baa4f7c02a7e/preview?project=64fe9e67d71d1c56225a"
-    },
-    {
-      "name": "Athleisure Active Shirt",
-      "price": 699,
-      "offer": 10,
-      "quantity": 20,
-      "category": "grocery",
-      "imageid": "652646930fd5b31990d9",
-      "color": 'white',
-      "size": 'XXL',
-      "gender": 'female',
-      "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652646930fd5b31990d9/preview?project=64fe9e67d71d1c56225a"
-    },
-    {
-      "name": "Vintage Vibe T-Shirt",
-      "price": 599,
-      "offer": 10,
-      "quantity": 20,
-      "category": "grocery",
-      "imageid": "652646c872509325b7dc",
-      "color": 'green',
-      "size": 'S',
-      "gender": 'male',
-      "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652646c872509325b7dc/preview?project=64fe9e67d71d1c56225a"
-    },
-    {
-      "name": "Signature Soft Cotton Tee",
-      "price": 599,
-      "offer": 10,
-      "quantity": 20,
-      "category": "grocery",
-      "imageid": "652647b69c625267d476",
-      "color": 'pink',
-      "size": 'M',
-      "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652647b69c625267d476/preview?project=64fe9e67d71d1c56225a"
-    },
-    {
-      "name": "Modern Minimalist Jersey ",
-      "price": 499,
-      "offer": 10,
-      "quantity": 10,
-      "category": "grocery",
-      "imageid": "652647f8d21f7b3a607e",
-      "color": 'orange',
-      "size": 'L',
-      "gender": 'female',
-      "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652647f8d21f7b3a607e/preview?project=64fe9e67d71d1c56225a"
-    },
-    {
-      "name": "Weekend Adventure Tee",
-      "price": 699,
-      "offer": 10,
-      "quantity": 20,
-      "category": "grocery",
-      "imageid": "652648ba7c16d3fc6135",
-      "color": 'red',
-      "size": 'XL',
-      "gender": 'male',
-      "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652648ba7c16d3fc6135/preview?project=64fe9e67d71d1c56225a"
-    }
-  ]
-
+  const products = useSelector(state => state.Products)
 
   const sliderRef = useRef(null);
-  const images = [img, img, img, img, img, img];
   const sliderSettings = {
     arrows: false, // Hide default arrows
     dots: false, // Hide default dots

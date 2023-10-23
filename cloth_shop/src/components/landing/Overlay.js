@@ -61,14 +61,14 @@ const Overlay = (props) => {
                 <div className="overlay" style={overlayStyle}>
 
 
-                    <div className="flex">
+                    {/* <div className="flex">
                         <button className="bg-blue-500 text-white px-4 py-2 rounded mb-2"
                             onClick={() => dispach(addCart({ id: props.img.id, name: props.img.name, price: props.img.price, quantity: 1, image: props.img.imageUrl }))}
                         >
                             <i className="fas fa-shopping-cart"></i>
                         </button>
 
-                    </div>
+                    </div> */}
 
                 </div>
             </div>

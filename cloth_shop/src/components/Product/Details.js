@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import img from "../Asset/2.jpg";
 import Overlay from "../landing/Overlay";
-import { Link } from "react-router-dom";
-
-
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addCart } from "../Redux/SliceCard";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const product = {
   name: "Basic Tee 6-Pack",
   price: "$192",
@@ -63,127 +65,57 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-
-
-const products = [
-  {
-    "name": "ComfortBlend Classic Tee",
-    "price": 399,
-    "offer": 10,
-    "quantity": 20,
-    "category": "grocery",
-    "imageid": "6526450b78d8efcd4d17",
-    "color": 'Black',
-    "size": 'S',
-    "gender": 'male',
-    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/6526450b78d8efcd4d17/preview?project=64fe9e67d71d1c56225a"
-
-  },
-  {
-    "name": "Eco-Friendly Cotton Crew ",
-    "price": 299,
-    "offer": 10,
-    "quantity": 20,
-    "category": "grocery",
-    "imageid": "65264595c5a24d1bed86",
-    "color": 'red',
-    "size": 'M',
-    "gender": 'female',
-    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/65264595c5a24d1bed86/preview?project=64fe9e67d71d1c56225a"
-  },
-  {
-    "name": "Urban Street Style Shirt",
-    "price": 199,
-    "offer": 10,
-    "quantity": 20,
-    "category": "grocery",
-    "gender": 'male',
-    "imageid": "652645d7bac4f2fde358",
-    "color": 'Blue',
-    "size": 'L',
-    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652645d7bac4f2fde358/preview?project=64fe9e67d71d1c56225a"
-  },
-  {
-    "name": "Retro Graphic Print Top",
-    "price": 499,
-    "offer": 10,
-    "quantity": 20,
-    "category": "grocery",
-    "imageid": "65264614baa4f7c02a7e",
-    "color": 'yellow',
-    "size": 'XL',
-    "gender": 'female',
-    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/65264614baa4f7c02a7e/preview?project=64fe9e67d71d1c56225a"
-  },
-  {
-    "name": "Athleisure Active Shirt",
-    "price": 699,
-    "offer": 10,
-    "quantity": 20,
-    "category": "grocery",
-    "imageid": "652646930fd5b31990d9",
-    "color": 'white',
-    "size": 'XXL',
-    "gender": 'female',
-    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652646930fd5b31990d9/preview?project=64fe9e67d71d1c56225a"
-  },
-  {
-    "name": "Vintage Vibe T-Shirt",
-    "price": 599,
-    "offer": 10,
-    "quantity": 20,
-    "category": "grocery",
-    "imageid": "652646c872509325b7dc",
-    "color": 'green',
-    "size": 'S',
-    "gender": 'male',
-    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652646c872509325b7dc/preview?project=64fe9e67d71d1c56225a"
-  },
-  {
-    "name": "Signature Soft Cotton Tee",
-    "price": 599,
-    "offer": 10,
-    "quantity": 20,
-    "category": "grocery",
-    "imageid": "652647b69c625267d476",
-    "color": 'pink',
-    "size": 'M',
-    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652647b69c625267d476/preview?project=64fe9e67d71d1c56225a"
-  },
-  {
-    "name": "Modern Minimalist Jersey ",
-    "price": 499,
-    "offer": 10,
-    "quantity": 10,
-    "category": "grocery",
-    "imageid": "652647f8d21f7b3a607e",
-    "color": 'orange',
-    "size": 'L',
-    "gender": 'female',
-    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652647f8d21f7b3a607e/preview?project=64fe9e67d71d1c56225a"
-  },
-  {
-    "name": "Weekend Adventure Tee",
-    "price": 699,
-    "offer": 10,
-    "quantity": 20,
-    "category": "grocery",
-    "imageid": "652648ba7c16d3fc6135",
-    "color": 'red',
-    "size": 'XL',
-    "gender": 'male',
-    "imageUrl": "https://cloud.appwrite.io/v1/storage/buckets/64fe9f282cfefd735881/files/652648ba7c16d3fc6135/preview?project=64fe9e67d71d1c56225a"
-  }
-]
 export default function Example() {
-
+  const notify = () => toast("Added to cart");
+  const alert = () => toast("Please select color and size");
 
   useEffect(() => {
-    // got top 
-    window.scrollTo(0, 0)
-  }, [])
+    // got top
+    window.scrollTo(0, 0);
+  }, []);
+  const dispach = useDispatch();
+  const id = useParams();
+  console.log(id.id);
+  const products = useSelector((state) => state.Products);
+  // get  product by using id
+  let data = [];
+  products.map((product, index) => {
+    if (product.id == id.id) {
+      data.push(product);
+    }
+  });
+  const item = data[0];
+
+  const userchanges = useState({
+    size: "",
+    color: "",
+    quantity: 1,
+  });
+
+  const addtoCart = () => {
+    console.log(userchanges);
+    if (userchanges.color && userchanges.size) {
+      dispach(
+        addCart({
+          ...item,
+          id: item.id,
+          color: [userchanges.color],
+          size: [userchanges.size],
+          quantity: userchanges.quantity,
+        })
+      );
+      notify();
+      userchanges.color = "";
+      userchanges.size = "";
+      userchanges.quantity = 1;
+    } else {
+      alert();
+    }
+  };
+
   return (
     <div className="bg-white">
+      <ToastContainer />
       <div
         className="grid grid-cols-1 md:grid-cols-2  gap-10"
         style={{
@@ -195,17 +127,18 @@ export default function Example() {
           <div className="py-10 mt-6 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
             <div className="p-6">
               <img
-                src={img}
+                src={item.imageUrl}
                 alt="Model wearing plain black basic tee."
                 className="w-full h-full object-center object-cover sm:rounded-lg "
               />
             </div>
             {/* retlated images  */}
             <div
-              className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-4"
+              className="mt-4 grid grid-cols-2 gap-1 sm:grid-cols-4 lg:grid-cols-4"
               style={{
-                width: "76%",
+                width: "86%",
                 margin: "auto",
+                cursor: "pointer",
               }}
             >
               {product.images.map((image) => (
@@ -213,7 +146,7 @@ export default function Example() {
                   key={image.id}
                   src={image.src}
                   alt={image.alt}
-                  className=" w-2/4 h-3/4 object-center object-cover rounded-md"
+                  className=" w-full h-full object-center object-cover rounded-md"
                 />
               ))}
             </div>
@@ -222,10 +155,10 @@ export default function Example() {
         <div className=" lg:row-span-3 lg:mt-0 pt-6 pr-6 pb-6">
           <h2 className="mt-8">Product information</h2>
           <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-            {product.name}
+            {item.name}
           </h1>
           <p className="text-3xl mt-2 tracking-tight text-gray-900">
-            {product.price}
+            ₹{item.price}
           </p>
 
           {/* Reviews */}
@@ -259,53 +192,126 @@ export default function Example() {
           <form className="mt-10">
             {/* Colors */}
             <div>
-              <h3 className="text-sm font-medium text-gray-900">Color</h3>
+              <h3
+                className="text-sm font-medium text-gray-900  "
+                style={{
+                  fontWeight: "bold",
+                }}
+              >
+                Color
+              </h3>
 
               <div className="flex mt-3">
-                <button className="w-6 h-6 rounded-full bg-gray-900 border-2 border-transparent" />
-                <button className="w-6 h-6 rounded-full bg-gray-200 ml-3 border-2 border-transparent" />
-                <button className="w-6 h-6 rounded-full bg-blue-500 ml-3 border-2 border-transparent" />
-
+                {item.color.map((color) => (
+                  <>
+                    <label className="ms-2">{color}</label>
+                    <input
+                      type="radio"
+                      name="color"
+                      value={userchanges.color}
+                      className="ms-2 h-6 w-6 rounded-full border-gray-300 border text-gray-600 focus:ring-indigo-500"
+                      onClick={() => {
+                        userchanges.color = color;
+                      }}
+                    />
+                  </>
+                ))}
               </div>
-
             </div>
 
             {/* Sizes */}
             <div className="mt-10">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-medium text-gray-900">Size</h3>
-                <a
-                  href="#"
-                  className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                <h3
+                  className="text-sm font-medium text-gray-900"
+                  style={{
+                    fontWeight: "bold",
+                  }}
                 >
-                  Size guide
-                </a>
+                  Size
+                </h3>
+
+                {/* quantity here  */}
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="count"
+                    className="text-sm font-medium text-gray-900"
+                  >
+                    Quantity
+                  </label>
+                  <select
+                    id="count"
+                    name="count"
+                    className="mt-1 p-1 ms-1 block border border-gray-300 bg-white rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    defaultValue={1}
+                    onChange={(e) => {
+                      userchanges.quantity = e.target.value;
+                    }}
+                  >
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((quantity) => (
+                      <option
+                        key={quantity}
+                        value={userchanges.quantity}
+                        className="text-sm font-medium text-gray-900"
+                      >
+                        {quantity}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <div className="flex mt-3">
-                <button className="w-12 h-8 rounded-lg bg-white text-black border-2 border-gray-300 px-2 py-1" >
-                  <span className=" text-black">S</span>
-                </button>
-                <button className="w-12 h-8 rounded-lg bg-white text-black ml-3 border-2 border-gray-300 px-2 py-1" >
-                  <span className=" text-black">M</span>
-                </button>
-                <button className="w-12 h-8 rounded-lg bg-white text-black ml-3 border-2 border-gray-300 px-2 py-1" >
-                  <span className=" text-black">L</span>
-                </button>
-                < button className="w-12 h-8 rounded-lg bg-white ml-3 text-black border-2 border-gray-300 px-2 py-1" >
-                  <span className=" text-black">XL</span>
-                </button>
+                {item.size.map((size) => (
+                  <>
+                    <label className="ms-2">{size}</label>
+                    <input
+                      type="radio"
+                      name="size"
+                      value={userchanges.size}
+                      className="ms-2 h-6 w-6 rounded-full border-gray-300 border text-gray-600 focus:ring-indigo-500"
+                      placeholder={size}
+                      onClick={() => {
+                        userchanges.size = size;
+                      }}
+                    />
+                  </>
+                ))}
               </div>
             </div>
-
-            <p
-              type=""
-              className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              style={{
-                cursor: "pointer",
-              }}
-            >
-              Buy now
-            </p>
+            <div className="flex ">
+              <p
+                type=""
+                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  addtoCart();
+                }}
+              >
+                Add to Cart
+              </p>
+              <Link
+                to="/reviewdetails"
+                className="mt-10 ms-2 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  dispach(
+                    addCart({
+                      ...item,
+                      id: item.id,
+                      color: [userchanges.color],
+                      size: [userchanges.size],
+                      quantity: userchanges.quantity,
+                    })
+                  );
+                }}
+              >
+                Buy now
+              </Link>
+            </div>
           </form>
 
           {/* Product details */}
@@ -314,12 +320,9 @@ export default function Example() {
 
             <div
               className="mt-4 prose prose-sm text-gray-500"
-              dangerouslySetInnerHTML={{ __html: product.description }}
+              dangerouslySetInnerHTML={{ __html: item.description }}
             />
-
           </div>
-
-
         </div>
       </div>
 
@@ -331,20 +334,26 @@ export default function Example() {
 
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {products.map((product, index) => (
-              <div key={product.id} className="group ">
+              <div
+                key={product.id}
+                className="group "
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
+              >
                 <Overlay img={{ ...product, id: index }} />
                 <div className="mt-4 flex justify-between">
                   <div>
                     <h3 className="text-sm text-gray-700">
-                      <Link to={`/details/${product.index}`}>
-                        {product.name}
-                      </Link>
+                      <Link to={`/details/${index}`}>{product.name}</Link>
                     </h3>
                     <p className="mt-1 text-sm text-gray-500">
                       {product.color}
                     </p>
                   </div>
-                  <p className="text-sm font-medium text-gray-900">{product.price}</p>
+                  <p className="text-sm font-medium text-gray-900">
+                    {product.price}
+                  </p>
                 </div>
               </div>
             ))}

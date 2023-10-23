@@ -4,6 +4,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useDispatch, useSelector } from "react-redux";
 import { removeCart } from '../Redux/SliceCard';
 import { setOpen } from '../Redux/CartItemShow';
+import { Link } from 'react-router-dom';
 const products = [
     {
         id: 1,
@@ -31,11 +32,11 @@ const products = [
 
 export default function ShippingCart() {
     const items = useSelector((state) => state);
-    const total = items.cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const total = items.cart.reduce((acc, item) => acc + (item.price) * (item.quantity), 0);
     const dispach = useDispatch();
     const checkopen = useSelector((state) => state);
     const setclose = useDispatch();
-
+    console.log(items.cart)
     return (
         <Transition.Root show={checkopen.cartopen} as={Fragment}>
             <Dialog as="div" className="relative z-10"
@@ -90,7 +91,7 @@ export default function ShippingCart() {
                                                             <li key={product.id} className="flex py-6">
                                                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                                     <img
-                                                                        src={product.image}
+                                                                        src={product.imageUrl}
                                                                         alt={product.name}
                                                                         className="h-full w-full object-cover object-center"
                                                                     />
@@ -136,12 +137,12 @@ export default function ShippingCart() {
                                             </div>
                                             <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                                             <div className="mt-6">
-                                                <a
-                                                    href="#"
+                                                <Link
+                                                    to="/reviewdetails"
                                                     className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                                                 >
                                                     Checkout
-                                                </a>
+                                                </Link>
                                             </div>
                                             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                                                 <p>
