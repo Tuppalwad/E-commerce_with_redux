@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, } from 'react-router-dom'
 import { verifySMS } from '../ApiServices/Services'
-
+import { autho } from '../Redux/AuthoApi'
+import { useDispatch } from 'react-redux'
 function Otp() {
     const [otp, setotp] = useState('')
     const nevigate = useNavigate()
     useEffect(() => {
         document.title = "Login"
     }, [])
-
+    const dispach = useDispatch()
     const handlesubmit = async () => {
 
         // take valuse from state and send to backend
         const phone = window.location.pathname.split('/')[2]
-        console.log(phone)
+        console.log(phone, otp)
         try {
             await verifySMS({ phone, otp }).then((res) => {
+                console.log(res.data.message)
                 if (res.data.message === 'OTP verified successfully') {
+                    localStorage.setItem('phone', phone)
+                    dispach(autho({ autho: true, phone: phone }))
                     alert('OTP verified successfully')
                     nevigate('/')
                 }

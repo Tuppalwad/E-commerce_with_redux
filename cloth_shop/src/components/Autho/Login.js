@@ -13,7 +13,7 @@ function Login() {
             await sendSMS({ contrycode, phone }).then((res) => {
                 if (res.data.status === 'true') {
                     alert('OTP sent')
-                    localStorage.setItem('phone', "+91" + phone)
+
                     authodispach(autho({ autho: true }))
                     navigate(`/otp/+${contrycode + phone}`)
                 }

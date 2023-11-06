@@ -27,6 +27,9 @@ function Shop() {
     })
   })
   console.log(filterdata)
+
+  const [towcol, setTowcol] = useState(false);
+
   return (
     <>
       <div className=" my-5 justify-center  text-center ">
@@ -162,8 +165,8 @@ function Shop() {
               </button>
               <button
                 style={{ border: filteritem.color === 'pink' ? '1px solid black' : 'none' }}
-                onClick={() => setFilteritem({ ...filteritem, color: 'gray' })} class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-3 rounded inline-flex items-center">
-                gray
+                onClick={() => setFilteritem({ ...filteritem, color: 'pink' })} class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-3 rounded inline-flex items-center">
+                pink
               </button>
               <button
                 style={{ border: filteritem.color === 'blue' ? '1px solid black' : 'none' }}
@@ -219,7 +222,7 @@ function Shop() {
 
         <div
           className="border-r-2 border-gray-300 h-0 md:h-[500px]  "
-          style={{ margin: "20px 20px" }}
+          style={{ margin: "20px 30px" }}
         ></div>
 
         <div className="mt-0 md:mt-6">
@@ -227,26 +230,43 @@ function Shop() {
             <span className="text-gray-500 text-sm">
               Showing {filterdata.length > 0 ? filterdata.length : test.length}{" "} results
             </span>
+            {/* remove filte text here  */}
+            <span className="text-gray-500 text-sm cursor-pointer"
+              onClick={() => setFilteritem({  // remove all filter here
+                color: '',
+                size: '',
+                gender: '',
+                price: ''
+              })}
+
+            >
+              Remove Filter
+            </span>
             <div>
               <i
                 class="fas fa-th-list mr-2 "
                 style={{
                   cursor: "pointer",
                 }}
+                onClick={() => setTowcol(false)}
               ></i>
               <i
                 class="fas fa-th-large "
                 style={{
                   cursor: "pointer",
                 }}
+                onClick={() => setTowcol(true)}
               ></i>
             </div>
           </div>
           <div
-            class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-3"
+
             style={{
               maxHeight: "600px",
               overflow: "scroll",
+              display: "grid",
+              gridTemplateColumns: towcol ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
+              gap: "20px",
             }}
           >
             {filterdata.length > 0 ? filterdata.map((img, index) => {
@@ -298,7 +318,7 @@ function Shop() {
             })}
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 }

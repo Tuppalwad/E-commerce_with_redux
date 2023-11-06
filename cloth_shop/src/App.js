@@ -18,11 +18,13 @@ import { useSelector } from "react-redux"
 import Otp from "./components/Autho/Otp";
 import ReviewProduct from "./components/Product/ReviewProduct";
 import Address from "./components/Product/Address";
+import BuyNow from "./components/Product/BuyNow";
 function App() {
   const selectore = useSelector(state => state)
   console.log(selectore)
   return (
     <div className="App">
+
       <Router>
         <Navbar />
         <ShippingCart />
@@ -39,6 +41,7 @@ function App() {
           <Route path="/payment" element={<Landing />} />
           <Route path="/otp/:id" element={<Otp />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/buynow" element={<BuyNow/>}/>
           <Route path="/blog/:id" element={<BlogPage />} />
           <Route path="/details/:id" element={<Details />} />
           <Route path="/shippingcart" element={<ShippingCart />} />

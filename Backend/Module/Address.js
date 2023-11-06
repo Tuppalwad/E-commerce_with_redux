@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
 const address = new mongoose.Schema({
-    name: {
+    fname: {
         type: String,
     },
-    homeNo: {
+    lname: {
         type: String,
     },
-    roadarea: {
+    email: {
         type: String,
     },
     pincode: {
@@ -19,7 +19,10 @@ const address = new mongoose.Schema({
     state: {
         type: String,
     },
-    nearby: {
+    address: {
+        type: String,
+    },
+    country: {
         type: String,
     },
     phone: {

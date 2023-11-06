@@ -11,11 +11,7 @@ const otpSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        expires: 300 // expires in 5 minutes
-    }
+
 });
 
 const otpschemaobj = mongoose.model('users', otpSchema);

@@ -5,12 +5,14 @@ const ScliceCard = createSlice({
     initialState: [],
     reducers: {
         addCart: (state, action) => {
-            const check = state.findIndex(item => item.id === action.payload.id);
-            if (check !== -1) {
-                state[check].quantity += 1;
-            } else {
-                state.push(action.payload);
-            }
+            // add data in it initial state 
+            state.push(action.payload);
+        },
+        //    update by usig id
+        update: (state, action) => {
+
+            const index = state.findIndex(item => item.id === action.payload.id);
+            state[index] = action.payload;
         },
         removeCart: (state, action) => {
             return state.filter(item => item.id !== action.payload.id);
@@ -19,5 +21,5 @@ const ScliceCard = createSlice({
 });
 
 const { reducer, actions } = ScliceCard;
-export const { addCart, removeCart, increaseCart, decreaseCart } = actions;
+export const { addCart, removeCart, increaseCart, decreaseCart, update } = actions;
 export default reducer;

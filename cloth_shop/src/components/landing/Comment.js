@@ -22,29 +22,27 @@ function Comment() {
           <div className=" block max-w-sm p-6 bg-white border  border-gray-200 rounded-lg shadow-lg hover:bg-white-100 dark:bg-white-800 dark:border-white-700 dark:hover:bg-white-700">
             <i class="fas fa-quote-left text-4xl text-gray-500"></i>
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-900">
-              Noteworthy technology acquisitions 2021
+            Quality and Material:
             </h5>
             <p class="font-normal text-gray-700 dark:text-gray-400">
-              Here are the biggest enterprise technology acquisitions of 2021 so
-              far, in reverse chronological order.
+            Comment on the quality of the t-shirt's material. Is it soft, durable, and comfortable to wear
             </p>
           </div>
 
           <div className=" block max-w-sm p-6 bg-white border  border-gray-200 rounded-lg shadow-lg hover:bg-white-100 dark:bg-white-800 dark:border-white-700 dark:hover:bg-white-700">
             <i class="fas fa-quote-left text-4xl text-gray-500"></i>
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-900">
-              Noteworthy technology acquisitions 2021
+            Comfort and Wearability:
             </h5>
             <p class="font-normal text-gray-700 dark:text-gray-400">
-              Here are the biggest enterprise technology acquisitions of 2021 so
-              far, in reverse chronological order.
+            Discuss how comfortable the t-shirt is to wear. Is it suitable for everyday use? Does it cause any discomfort or itching
             </p>
           </div>
 
           <div className=" block max-w-sm p-6 bg-white border  border-gray-200 rounded-lg shadow-lg hover:bg-white-100 dark:bg-white-800 dark:border-white-700 dark:hover:bg-white-700">
             <i class="fas fa-quote-left text-4xl text-gray-500"></i>
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-900">
-              Noteworthy technology acquisitions 2021
+            Price and Value for Money
             </h5>
             <p class="font-normal text-gray-700 dark:text-gray-400">
               Here are the biggest enterprise technology acquisitions of 2021 so

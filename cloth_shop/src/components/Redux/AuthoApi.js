@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const authoroute = createSlice({
     name: 'authoroute',
-    initialState: false,
+    initialState: { autho: false,phone:""},
     reducers: {
         autho: (state, action) => {
-            return state = action.payload.autho;
+            return { autho: action.payload.autho,phone:action.payload.phone };
         },
     },
 });

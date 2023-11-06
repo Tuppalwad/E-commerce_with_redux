@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
-import img from "../Asset/2.jpg";
 import Overlay from "../landing/Overlay";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addCart } from "../Redux/SliceCard";
 import { ToastContainer, toast } from "react-toastify";
+import {checklogin} from "../ApiServices/Services"
 import "react-toastify/dist/ReactToastify.css";
 const product = {
   name: "Basic Tee 6-Pack",
@@ -67,20 +67,20 @@ function classNames(...classes) {
 
 export default function Example() {
   const notify = () => toast("Added to cart");
-  const alert = () => toast("Please select color and size");
+  const alert = (message) => toast(message);
 
   useEffect(() => {
-    // got top
     window.scrollTo(0, 0);
   }, []);
   const dispach = useDispatch();
   const id = useParams();
   console.log(id.id);
   const products = useSelector((state) => state.Products);
+
   // get  product by using id
   let data = [];
   products.map((product, index) => {
-    if (product.id == id.id) {
+    if (product.id ==id.id) {
       data.push(product);
     }
   });
@@ -93,15 +93,16 @@ export default function Example() {
   });
 
   const addtoCart = () => {
-    console.log(userchanges);
+    console.log(userchanges.quantity);
+    console.log(userchanges.color)
     if (userchanges.color && userchanges.size) {
       dispach(
         addCart({
           ...item,
+          quantity: parseInt(userchanges.quantity) || 1,
           id: item.id,
           color: [userchanges.color],
           size: [userchanges.size],
-          quantity: userchanges.quantity,
         })
       );
       notify();
@@ -109,9 +110,30 @@ export default function Example() {
       userchanges.size = "";
       userchanges.quantity = 1;
     } else {
-      alert();
+      alert("Please select size and color");
     }
   };
+
+  const nevigate = useNavigate();
+  const handlecheckout = async () => {
+    const phone = localStorage.getItem("phone");
+    console.log(phone)
+    if (phone!=null){
+      await checklogin ({ phone: phone }).then((res) => {
+        console.log(res.data)
+        if (res.data.status===true) {
+          nevigate("/reviewdetails");
+        }
+        else{
+          alert("Please login first");
+        }
+
+    }
+    )}
+    else{
+      alert("Please login first");
+    }
+  }
 
   return (
     <div className="bg-white">
@@ -202,7 +224,7 @@ export default function Example() {
               </h3>
 
               <div className="flex mt-3">
-                {item.color.map((color) => (
+                {item.colors.map((color) => (
                   <>
                     <label className="ms-2">{color}</label>
                     <input
@@ -235,33 +257,30 @@ export default function Example() {
                 <div className="flex items-center justify-between">
                   <label
                     htmlFor="count"
-                    className="text-sm font-medium text-gray-900"
+                    className="text-sm font-medium text-gray-900 "
+                    style={{
+                      fontWeight: "bold",
+                    }}
                   >
                     Quantity
                   </label>
                   <select
                     id="count"
                     name="count"
-                    className="mt-1 p-1 ms-1 block border border-gray-300 bg-white rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mt-1 p-1 ms-2 block border border-gray-300 bg-white rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     defaultValue={1}
                     onChange={(e) => {
                       userchanges.quantity = e.target.value;
                     }}
                   >
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((quantity) => (
-                      <option
-                        key={quantity}
-                        value={userchanges.quantity}
-                        className="text-sm font-medium text-gray-900"
-                      >
-                        {quantity}
-                      </option>
+                    {[...Array(10).keys()].map((i) => (
+                      <option value={i + 1}>{i + 1}</option>
                     ))}
                   </select>
                 </div>
               </div>
               <div className="flex mt-3">
-                {item.size.map((size) => (
+                {item.sizes.map((size) => (
                   <>
                     <label className="ms-2">{size}</label>
                     <input
@@ -291,26 +310,15 @@ export default function Example() {
               >
                 Add to Cart
               </p>
-              <Link
-                to="/reviewdetails"
+              <p
+                onClick={handlecheckout}
                 className="mt-10 ms-2 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 style={{
                   cursor: "pointer",
                 }}
-                onClick={() => {
-                  dispach(
-                    addCart({
-                      ...item,
-                      id: item.id,
-                      color: [userchanges.color],
-                      size: [userchanges.size],
-                      quantity: userchanges.quantity,
-                    })
-                  );
-                }}
               >
                 Buy now
-              </Link>
+              </p>
             </div>
           </form>
 

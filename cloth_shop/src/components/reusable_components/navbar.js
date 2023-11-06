@@ -3,31 +3,43 @@ import logo from "../Asset/logo1.png";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpen } from "../Redux/CartItemShow";
-import { checklogin } from "../ApiServices/Services";
+import { checklogin, logout } from "../ApiServices/Services";
 import { autho } from "../Redux/AuthoApi";
+import { set } from "mongoose";
 function Navbar() {
   const c_items = useSelector((state) => state);
-
   const dispachCart = useDispatch();
-
-  const dipachautho = useDispatch();
+  const dispatchautho = useDispatch();
   const open = useSelector((state) => state);
   const chekclogin = useSelector((state) => state);
   useEffect(() => {
-    const phone = localStorage.getItem("phone");
+    const phone = localStorage.getItem("phone") || "";
     if (phone) {
-      checklogin({ phone }).then((res) => {
-        if (res.data.status === "true") {
-          dipachautho(autho({ autho: true }));
-        }
-      });
+      (async () => {
+        await checklogin({ phone }).then((res) => {
+          if (res.data.status === "true") {
+            dispatchautho(autho({ autho: true ,phone:phone}));
+          }
+        });
+      }
+      )();
+    } else {
+      dispatchautho(autho({ autho: false,phone:"" }));
     }
   }, []);
 
-
-  console.log(open)
-
-
+  console.log(chekclogin.AuthoApi.phone);
+  const handlelogout = async () => {
+    const phone = localStorage.getItem("phone");
+    if (phone) {
+      logout({ phone: phone }).then((res) => {
+        if (res.data.status === "true") {
+          localStorage.removeItem("phone");
+          dispatchautho(autho({ autho: false }));
+        }
+      });
+    }
+  };
   return (
     <div>
       <nav class="bg-white border-gray-200 dark:bg-white">
@@ -53,59 +65,89 @@ function Navbar() {
 
           <div class="flex items-center ">
             <p>
-
-              <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-dark focus:ring-4 bottom-0 outline-none focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-white-600  " type="button">
-                <i class="fas fa-user mr-2"></i>
+              <button
+                id="dropdownDefaultButton"
+                data-dropdown-toggle="dropdown"
+                class="text-dark focus:ring-4 bottom-0 outline-none focus:outline-none focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-white-600  "
+                type="button"
+              >
+                <i class="fas fa-user mr-2"
+               
+                ></i>
               </button>
 
-              <div id="dropdown" class="z-10  hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                <ul class="py-2  text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+              <div
+                id="dropdown"
+                class="z-10  hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+              >
+                <ul
+                  class="py-2  text-sm text-gray-700 dark:text-gray-200"
+                  aria-labelledby="dropdownDefaultButton"
+                >
                   <li>
-                    <Link to="/" class="block px-4 ms-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    <Link
+                      to="/"
+                      class="block px-4 ms-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
                       Hello user
-
                     </Link>
-                    {
-                      chekclogin.autho ? <span class="text-xs text-gray-400 ms-3 mb-2">{
-                        localStorage.getItem("phone")
-                      } </span> : <></>
-                    }
+                    {chekclogin.AuthoApi.autho ? (
+                      <span class="text-xs text-gray-400 ms-3 mb-2">
+                        {chekclogin.AuthoApi.phone}
+                      </span>
+                    ) : (
+                      <></>
+                    )}
                   </li>
 
-                  {
-                    chekclogin.autho ? <li >
+                  {chekclogin.AuthoApi.autho ? (
+                    <li>
                       {/* phone number icon */}
 
-                      <Link onClick={
-
-                        () => dispachCart(setOpen({ cartopen: !open.cartopen }))
-                      } class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"><i class="fas fa-phone-alt mr-2 "></i> My Orders</Link>
+                      <Link
+                        onClick={() =>
+                          dispachCart(setOpen({ cartopen: !open.cartopen }))
+                        }
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        <i class="fas fa-phone-alt mr-2 "></i> My Orders
+                      </Link>
                     </li>
-                      : <>
-                        {/* login button  */}
-                        <li >
-                          <Link to="/login" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"><i class="fas fa-sign-in-alt mr-2"></i>
-                            Sign in</Link>
-                        </li>
-                      </>
-                  }
-
-                  <li>
-                    <Link to="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                      < i class="fas fa-sign-out-alt mr-2"></i>
-                      Sign out</Link>
-                  </li>
+                  ) : (
+                    <>
+                      {/* login button  */}
+                      <li>
+                        <Link
+                          to="/login"
+                          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        >
+                          <i class="fas fa-sign-in-alt mr-2"></i>
+                          Sign in
+                        </Link>
+                      </li>
+                    </>
+                  )}
+                  { chekclogin.AuthoApi.autho? (
+                    <li>
+                      <p
+                        onClick={() => {
+                          handlelogout();
+                        }}
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                      >
+                        <i class="fas fa-sign-out-alt mr-2"></i>
+                        Sign out
+                      </p>
+                    </li>
+                  ) : (
+                    <></>
+                  )}
                 </ul>
               </div>
-
-
             </p>
             <p
-
               class="mr-6 text-sm  text-gray-500 dark:text-gray-900 relative"
-              onClick={() =>
-                dispachCart(setOpen({ cartopen: !open.cartopen }))
-              }
+              onClick={() => dispachCart(setOpen({ cartopen: !open.cartopen }))}
               style={{
                 cursor: "pointer",
               }}
@@ -117,7 +159,7 @@ function Navbar() {
             </p>
             <Link
               to="/login"
-              class="text-sm  text-gray-600 dark:text-gray-500 hover:underline"
+              class="text-sm  text-gray-600 dark:text-gray-500 hover:underline "
             >
               Sign in
             </Link>

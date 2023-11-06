@@ -4,6 +4,7 @@ import CartItemShow from './CartItemShow';
 import AuthoApi from './AuthoApi';
 import addrescartopen from './AddAddresss';
 import Products from "./Allproducts"
+import addressReducer from './addressSlice';
 const store = configureStore({
     reducer: {
         cart: ScliceCard,
@@ -11,6 +12,8 @@ const store = configureStore({
         AuthoApi: AuthoApi,
         addrescartopen: addrescartopen,
         Products: Products,
+        address: addressReducer,
+       
     },
 });
 
