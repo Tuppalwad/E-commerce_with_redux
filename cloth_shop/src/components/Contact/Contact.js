@@ -1,6 +1,37 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { contactForm } from "../ApiServices/Services";
+
 export default function Contact() {
+
+  const [contact, setContact] = React.useState({
+    fname: "",
+    lname: "",
+    email: "",
+    message: "",
+  });
+  const handlesubmit = () => {
+
+    contactForm({
+      ...contact, phone:
+        localStorage.getItem("phone"),
+    }).then((res) => {
+      if (res.data.status === "true") {
+        alert("Your message has been sent successfully");
+        setContact({
+          fname: "",
+          lname: "",
+          email: "",
+          message: "",
+
+        });
+      } else {
+        alert("Something went wrong");
+      }
+    });
+  };
+
+
   return (
     <>
       <div>
@@ -67,6 +98,11 @@ export default function Contact() {
                   id="grid-first-name"
                   type="text"
                   placeholder="Jane"
+                  value={contact.fname}
+                  onChange={(e) => {
+                    setContact({ ...contact, fname: e.target.value });
+                  }
+                  }
                 />
                 <p className="text-red-500 text-xs italic">
                   Please fill out this field.
@@ -76,6 +112,7 @@ export default function Contact() {
                 <label
                   className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                   for="grid-last-name"
+
                 >
                   Last Name
                 </label>
@@ -84,6 +121,10 @@ export default function Contact() {
                   id="grid-last-name"
                   type="text"
                   placeholder="Doe"
+                  value={contact.lname}
+                  onChange={(e) => {
+                    setContact({ ...contact, lname: e.target.value })
+                  }}
                 />
               </div>
             </div>
@@ -100,6 +141,10 @@ export default function Contact() {
                   id="grid-password"
                   type="email"
                   placeholder="Enter your email"
+                  value={contact.email}
+                  onChange={(e) => {
+                    setContact({ ...contact, email: e.target.value })
+                  }}
                 />
               </div>
               <div className="w-full px-3">
@@ -114,12 +159,17 @@ export default function Contact() {
                   id="grid-password"
                   type="email"
                   placeholder="Enter your message"
+                  value={contact.message}
+                  onChange={(e) => {
+                    setContact({ ...contact, message: e.target.value })
+                  }}
                 />
               </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-2">
               <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                 <button
+                  onClick={handlesubmit}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   type="button"
                 >

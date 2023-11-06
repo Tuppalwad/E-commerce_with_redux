@@ -7,8 +7,8 @@ import img2 from "../Asset/2.jpg";
 import img3 from "../Asset/3.jpg";
 
 export default function ImageSlider() {
-  const sliderSettings = {
-    dots: true,
+  const settings = {
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -16,25 +16,40 @@ export default function ImageSlider() {
     autoplay: true,
   };
 
-  // Inline CSS for image style
-  // const imageStyle = {
-  //   width: "100%",
-  //   height: "600px",
-  // };
-
   return (
-    <div className="">
-      <Slider {...sliderSettings} style={{ padding: 0 }}>
+
+    <div
+      style={{
+        margin: "0 auto",
+        width: "100%",
+        padding: "",
+      }}
+
+    >
+      <Slider {...settings} className="p-0 m-0">
         <div>
-          <img src={img2} alt="Image 1" />
+          <img
+            className="w-full h-auto lg:h-screen "
+            src={img2}
+            alt=""
+          />
         </div>
         <div>
-          <img src={img2} alt="Image 2" />
+          <img
+            className="w-full h-auto lg:h-screen "
+            src={img2}
+            alt=""
+          />
         </div>
         <div>
-          <img src={img3} alt="Image 3" />
+          <img
+            className="w-full h-auto lg:h-screen "
+            src={img2}
+            alt=""
+          />
         </div>
       </Slider>
     </div>
+
   );
 }

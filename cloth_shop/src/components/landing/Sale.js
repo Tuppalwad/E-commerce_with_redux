@@ -3,37 +3,14 @@ import img from "../Asset/t-1.jpg";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-const imageStyle = {
-  width: "100%",
-  height: "auto",
-  transition: "transform 0.3s",
-};
+import Overlay from "./Overlay";
+import { useSelector } from "react-redux";
 
-const overlayStyle = {
-  position: "absolute",
-  top: "0",
-  left: "0",
-  width: "100%",
-  height: "100%",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  backgroundColor: "rgba(0, 0, 0, 0.6)",
-  opacity: 0,
-  transition: "opacity 0.3s",
-};
-
-const iconStyle = {
-  fontSize: "24px",
-  color: "white",
-  margin: "0 5px",
-  cursor: "pointer",
-};
 
 function Sale() {
+  const products = useSelector(state => state.Products)
+
   const sliderRef = useRef(null);
-  const images = [img, img, img, img, img, img];
   const sliderSettings = {
     arrows: false, // Hide default arrows
     dots: false, // Hide default dots
@@ -81,7 +58,7 @@ function Sale() {
         }}
       >
         <Slider ref={sliderRef} {...sliderSettings}>
-          {images.map((image, index) => (
+          {products.map((image, index) => (
             <div key={index}>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="relative">
@@ -90,28 +67,7 @@ function Sale() {
                     onMouseEnter={handleImageHover}
                     onMouseLeave={handleImageLeave}
                   >
-                    <img
-                      src={image}
-                      alt={`Image ${index + 1}`}
-                      style={imageStyle}
-                    />
-                    <div className="overlay" style={overlayStyle}>
-                      <div
-                        style={{
-                          paddingBottom: "20px",
-                        }}
-                      >
-                        <i className="fas fa-thumbs-up" style={iconStyle}></i>
-                        <i
-                          className="fas fa-shopping-cart"
-                          style={iconStyle}
-                        ></i>
-                        <i className="fas fa-thumbs-down" style={iconStyle}></i>
-                      </div>
-                      <button className="bg-blue-500 text-white px-4 py-2 rounded mb-2">
-                        Buy Now
-                      </button>
-                    </div>
+                    <Overlay img={{ ...image, id: index }} />
                   </div>
                 </div>
                 <div className="relative">
@@ -120,28 +76,7 @@ function Sale() {
                     onMouseEnter={handleImageHover}
                     onMouseLeave={handleImageLeave}
                   >
-                    <img
-                      src={image}
-                      alt={`Image ${index + 1}`}
-                      style={imageStyle}
-                    />
-                    <div className="overlay" style={overlayStyle}>
-                      <div
-                        style={{
-                          paddingBottom: "20px",
-                        }}
-                      >
-                        <i className="fas fa-thumbs-up" style={iconStyle}></i>
-                        <i
-                          className="fas fa-shopping-cart"
-                          style={iconStyle}
-                        ></i>
-                        <i className="fas fa-thumbs-down" style={iconStyle}></i>
-                      </div>
-                      <button className="bg-blue-500 text-white px-4 py-2 rounded mb-2">
-                        Buy Now
-                      </button>
-                    </div>
+                    <Overlay img={{ ...image, id: index }} />
                   </div>
                 </div>
                 <div className="relative">
@@ -150,28 +85,7 @@ function Sale() {
                     onMouseEnter={handleImageHover}
                     onMouseLeave={handleImageLeave}
                   >
-                    <img
-                      src={image}
-                      alt={`Image ${index + 1}`}
-                      style={imageStyle}
-                    />
-                    <div className="overlay" style={overlayStyle}>
-                      <div
-                        style={{
-                          paddingBottom: "20px",
-                        }}
-                      >
-                        <i className="fas fa-thumbs-up" style={iconStyle}></i>
-                        <i
-                          className="fas fa-shopping-cart"
-                          style={iconStyle}
-                        ></i>
-                        <i className="fas fa-thumbs-down" style={iconStyle}></i>
-                      </div>
-                      <button className="bg-blue-500 text-white px-4 py-2 rounded mb-2">
-                        Buy Now
-                      </button>
-                    </div>
+                    <Overlay img={{ ...image, id: index }} />
                   </div>
                 </div>
               </div>
